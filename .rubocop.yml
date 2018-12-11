@@ -1,0 +1,15 @@
+Metrics/LineLength:
+  Max: 200
+
+Style/StringLiterals:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 20
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*.rb
+
+Metrics/MethodLength:
+  Max: 20
