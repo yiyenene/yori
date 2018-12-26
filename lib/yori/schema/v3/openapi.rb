@@ -11,13 +11,8 @@ require 'yori/schema/v3/external_documentation'
 module Yori
   module Schema
     module V3
-      # OpenAPI: This is the root document object of the OpenAPI document.
-      # @openapi: REQUIRED. This string MUST be the semantic version number of the OpenAPI Specification version that the OpenAPI document uses.
-      #   The openapi field SHOULD be used by tooling specifications and clients to interpret the OpenAPI document.
-      #   This is not related to the API info.version string.
-      # @info: REQUIRED. Provides metadata about the API. The metadata MAY be used by tooling as required.
-      # @servers: An array of Server Objects, which provide connectivity information to a target server.
-      #   If the servers property is not provided, or is an empty array, the default value would be a Server Object with a url value of /.
+      # OpenAPI
+      #   This is the root document object of the OpenAPI document.
       class OpenAPI < Yori::SchemaBase
         # @!method openapi
         #   REQUIRED. This string MUST be the semantic version number of the OpenAPI Specification version that the OpenAPI document uses.
