@@ -28,7 +28,7 @@ module Yori
         return eval_class!(klass, &block) unless value
 
         case value
-        when String
+        when String, FalseClass
           value # pass as a runtime expression
         when Hash
           eval_hash!(klass, value)
