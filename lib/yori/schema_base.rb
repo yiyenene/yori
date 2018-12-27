@@ -79,6 +79,17 @@ module Yori
         end
       end
 
+      def hash_field(name, key_name)
+        define_method(key_name) do |key, value|
+          self[name.to_s] ||= {}
+          self[name.to_s][key.to_s] = value
+        end
+        define_method(name) do |&block|
+          self[name.to_s] = {}
+          instance_eval(&block)
+        end
+      end
+
       def hash_field_block(name, key_name, schema_class)
         define_method(key_name) do |key, value = nil, &block|
           c = self.class.eval_input!(schema_class, value, &block)
