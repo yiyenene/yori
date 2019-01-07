@@ -29,6 +29,8 @@ module Yori
           self[status_code.to_s] = self.class.eval_class!(Yori::Schema::V3::Response, &block)
         end
 
+        alias status http_status_code
+
         def validate!
           status_keys = keys.reject { |x| x == 'default' }
           raise Yori::Errors::InvalidSchemaError, 'The Responses Object MUST contain at least one response code.' if status_keys.empty?
