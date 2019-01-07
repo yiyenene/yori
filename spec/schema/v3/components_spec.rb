@@ -6,7 +6,7 @@ RSpec.describe Yori::Schema::V3::Components do
   let(:schema) { Yori::Schema::V3::Components.new }
 
   before do
-    Yori::Schema::V3::Components.register_component 'response', 'simple_string' do
+    Yori::Schema::V3::Components.register_component '', 'response', 'simple_string' do
       description 'A simple string response'
       content do
         content_type 'text/plain' do
@@ -17,7 +17,7 @@ RSpec.describe Yori::Schema::V3::Components do
       end
     end
 
-    Yori::Schema::V3::Components.register_component 'schema', 'string', type: 'string'
+    Yori::Schema::V3::Components.register_component '', 'schema', 'string', type: 'string'
   end
 
   let(:block) do
@@ -27,8 +27,8 @@ RSpec.describe Yori::Schema::V3::Components do
   end
 
   before do
+    schema.id = ''
     schema.instance_eval(&block)
-    p schema
   end
 
   describe 'validate!' do

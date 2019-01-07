@@ -38,7 +38,7 @@ module Yori
         hash_field_block :callbacks, :callback, Yori::Schema::V3::Callback
 
         def merge_registered!
-          components = self.class.registered_components
+          components ||= self.class.registered_components[id]
           components.flat_map { |_component, procs| procs.values }
                     .each do |block|
                       instance_eval(&block)
@@ -53,12 +53,15 @@ module Yori
         end
 
         class << self
-          attr_reader :registered_components
-
-          def register_component(component, key, value = nil, &block)
+          def registered_components
             @registered_components ||= {}
-            @registered_components[component.to_s] ||= {}
-            @registered_components[component.to_s][key.to_s] = proc { check_and_send!(component, key, value, &block) }
+          end
+
+          def register_component(id, component, key, value = nil, &block)
+            @registered_components ||= {}
+            @registered_components[id] ||= {}
+            @registered_components[id][component.to_s] ||= {}
+            @registered_components[id][component.to_s][key.to_s] = proc { check_and_send!(component, key, value, &block) }
           end
         end
       end

@@ -18,11 +18,11 @@ module Yori
         #   In case of ambiguous matching, it's up to the tooling to decide which one to use.
         def path(path_temp, value = nil, &block)
           path_temp = '/' + path_temp unless path_temp.start_with?('/')
-          self[path_temp] = self.class.eval_input!(Yori::Schema::V3::PathItem, value, &block)
+          self[path_temp] = self.class.eval_input!(Yori::Schema::V3::PathItem, id, value, &block)
         end
 
         def merge_registered!
-          self.class.registered_path.each do |_path, block|
+          self.class.registered_path[id]&.each do |_path, block|
             instance_eval(&block)
           end
         end
@@ -30,9 +30,10 @@ module Yori
         class << self
           attr_reader :registered_path
 
-          def register_path(path, value = nil, &block)
+          def register_path(id, path, value = nil, &block)
             @registered_path ||= {}
-            @registered_path[path] = proc { path(path, value, &block) }
+            @registered_path[id] ||= {}
+            @registered_path[id][path] = proc { path(path, value, &block) }
           end
         end
       end

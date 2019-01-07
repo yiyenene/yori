@@ -11,7 +11,7 @@ module Yori
       def method_missing(name, *args, &block)
         arg = args.first
         if arg || block_given?
-          c = self.class.eval_input!(self.class, arg, &block)
+          c = self.class.eval_input!(self.class, id, arg, &block)
           self[name.to_s] = c
           return self
         end

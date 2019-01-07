@@ -19,34 +19,38 @@ module Yori
 
     def validate!; end
 
+    attr_accessor :id
+
     def ref(value)
       self['$ref'] = value
     end
 
     class << self
-      def eval_input!(klass, value = nil, &block)
-        return eval_class!(klass, &block) unless value
+      def eval_input!(klass, id, value = nil, &block)
+        return eval_class!(klass, id, &block) unless value
 
         case value
         when String, FalseClass
           value # pass as a runtime expression
         when Hash
-          eval_hash!(klass, value)
+          eval_hash!(klass, id, value)
         else
           raise 'direct assignment value must be a Hash'
         end
       end
 
-      def eval_hash!(klass, value)
+      def eval_hash!(klass, id, value)
         klass[value].tap do |c|
           raise 'must inherit SchemaBase class' unless c.is_a?(SchemaBase)
+          c.id = id
           c.validate!
         end
       end
 
-      def eval_class!(klass, &block)
+      def eval_class!(klass, id, &block)
         klass.new.tap do |c|
           raise 'must inherit SchemaBase class' unless c.is_a?(SchemaBase)
+          c.id = id
           c.instance_eval(&block)
           c.validate!
         end
@@ -62,14 +66,15 @@ module Yori
 
       def field_block(name, schema_class)
         define_method(name) do |value = nil, &block|
-          c = self.class.eval_input!(schema_class, value, &block)
+          c = self.class.eval_input!(schema_class, id, value, &block)
+          send("on_register_#{name}", c) if respond_to?("on_register_#{name}")
           self[name.to_s] = c
         end
       end
 
       def array_field_block(name, item_name, schema_class)
         define_method(item_name) do |value = nil, &block|
-          c = self.class.eval_input!(schema_class, value, &block)
+          c = self.class.eval_input!(schema_class, id, value, &block)
           self[name.to_s] ||= []
           self[name.to_s] << c
         end
@@ -92,7 +97,7 @@ module Yori
 
       def hash_field_block(name, key_name, schema_class)
         define_method(key_name) do |key, value = nil, &block|
-          c = self.class.eval_input!(schema_class, value, &block)
+          c = self.class.eval_input!(schema_class, id, value, &block)
           self[name.to_s] ||= {}
           self[name.to_s][key.to_s] = c
         end

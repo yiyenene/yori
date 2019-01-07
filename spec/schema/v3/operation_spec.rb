@@ -63,6 +63,7 @@ RSpec.describe Yori::Schema::V3::Operation do
   end
 
   before do
+    schema.id = ''
     schema.instance_eval(&block)
   end
 

@@ -6,7 +6,7 @@ RSpec.describe Yori::Schema::V3::Paths do
   let(:schema) { Yori::Schema::V3::Paths.new }
 
   before do
-    Yori::Schema::V3::Paths.register_path '/pets' do
+    Yori::Schema::V3::Paths.register_path '', '/pets' do
       get do
         description 'Returns pets based on ID'
         summary 'Find pets by ID'
@@ -52,6 +52,7 @@ RSpec.describe Yori::Schema::V3::Paths do
   end
 
   before do
+    schema.id = ''
     schema.instance_eval(&block)
   end
 

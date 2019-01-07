@@ -2,6 +2,7 @@
 
 require 'yori/schema/v3/discriminator'
 require 'yori/schema/v3/xml'
+require 'yori/schema/v3/external_documentation'
 
 module Yori
   module Schema
