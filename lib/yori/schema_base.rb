@@ -67,7 +67,6 @@ module Yori
       def field_block(name, schema_class)
         define_method(name) do |value = nil, &block|
           c = self.class.eval_input!(schema_class, id, value, &block)
-          send("on_register_#{name}", c) if respond_to?("on_register_#{name}")
           self[name.to_s] = c
         end
       end

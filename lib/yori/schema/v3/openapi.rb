@@ -31,17 +31,9 @@ module Yori
         #   REQUIRED. The available paths and operations for the API.
         field_block :paths, Yori::Schema::V3::Paths
 
-        def on_register_paths(paths)
-          paths.merge_registered!
-        end
-
         # @!method components
         #   An element to hold various schemas for the specification.
         field_block :components, Yori::Schema::V3::Components
-
-        def on_register_components(components)
-          components.merge_registered!
-        end
 
         # @!method security
         #   A declaration of which security mechanisms can be used across the API.
