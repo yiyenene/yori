@@ -13,21 +13,25 @@ RSpec.describe Yori::Schema::V3::OpenAPI do
         version '1.0.1'
       end
       paths do
-        path '/pets' do
-          get do
-            description 'Retruns pets based on ID'
-            responses do
-              status '200' do
-                description 'pet response'
-              end
-            end
-          end
-        end
+        merge_registered!
       end
     end
   end
 
   before do
+    Yori::Schema::V3::Composer.register do
+      path '/pets' do
+        get do
+          description 'Retruns pets based on ID'
+          responses do
+            status '200' do
+              description 'pet response'
+            end
+          end
+        end
+      end
+    end
+    schema.id = ''
     schema.instance_eval(&block)
   end
 
