@@ -28,7 +28,9 @@ module Yori
         end
 
         class << self
-          attr_reader :registered_path
+          def registered_path
+            @registered_path ||= {}
+          end
 
           def register_path(id, path, value = nil, &block)
             @registered_path ||= {}
