@@ -7,8 +7,8 @@ require "yori/version"
 Gem::Specification.new do |spec|
   spec.name          = "yori"
   spec.version       = Yori::VERSION
-  spec.authors       = ["nakakuki-shingo"]
-  spec.email         = ["nakakuki.shingo@vareal.co.jp"]
+  spec.authors       = ["yiyenene"]
+  spec.email         = ["goodbyeboredworld@aol.jp"]
 
   spec.summary       = "Yet another OpenAPI Ruby Implementation."
   spec.homepage      = "https://github.com/yiyenene/yori"
