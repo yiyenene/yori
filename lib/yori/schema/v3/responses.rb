@@ -18,18 +18,19 @@ module Yori
         #   Use this field to cover undeclared responses. A Reference Object can link to a response that the OpenAPI Object's components/responses section defines.
         field_block :default, Yori::Schema::V3::Response
 
-        # @!method http_status_code
+        # @!method response
         #   Any HTTP status code can be used as the property name, but only one property per code, to describe the expected response for that HTTP status code.
         #   A Reference Object can link to a response that is defined in the OpenAPI Object's components/responses section.
         #   This field MUST be enclosed in quotation marks (for example, "200") for compatibility between JSON and YAML.
         #   To define a range of response codes, this field MAY contain the uppercase wildcard character X.
         #   For example, 2XX represents all response codes between [200-299]. The following range definitions are allowed: 1XX, 2XX, 3XX, 4XX, and 5XX.
         #   If a response range is defined using an explicit code, the explicit code definition takes precedence over the range definition for that code.
-        def http_status_code(status_code, &block)
+        def response(status_code, &block)
           self[status_code.to_s] = self.class.eval_class!(Yori::Schema::V3::Response, id, &block)
         end
 
-        alias status http_status_code
+        alias status response
+        alias http_status_code response
 
         def validate!
           status_keys = keys.reject { |x| x == 'default' }
