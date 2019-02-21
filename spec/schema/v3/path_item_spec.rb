@@ -27,6 +27,19 @@ RSpec.describe Yori::Schema::V3::PathItem do
           end
         end
       end
+      put do
+        summary 'Updates a pet in the store with form data'
+        responses do
+          status 200 do
+            description 'Pet updated.'
+            content do
+              content_type 'application/json', &empty
+              content_type('application/xml') {}
+            end
+          end
+        end
+      end
+
       parameters do
         parameter do
           name 'id'
@@ -47,6 +60,7 @@ RSpec.describe Yori::Schema::V3::PathItem do
 
   before do
     schema.instance_eval(&block)
+    puts schema
   end
 
   describe 'validate!' do
