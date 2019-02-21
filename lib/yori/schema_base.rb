@@ -25,10 +25,6 @@ module Yori
       self['$ref'] = value
     end
 
-    def empty
-      proc {}
-    end
-
     class << self
       def eval_input!(klass, id, value = nil, &block)
         return eval_class!(klass, id, &block) unless value
