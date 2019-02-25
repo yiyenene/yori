@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'yori/schema/v3/schema'
 require 'yori/schema/v3/example'
 require 'yori/schema/v3/encoding'
 
